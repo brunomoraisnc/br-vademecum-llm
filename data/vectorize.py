@@ -1,10 +1,5 @@
+from env_variables import EMBEDDINGS_ENCODE_KWARGS, EMBEDDINGS_MODEL_KWARGS, EMBEDDINGS_MODEL_NAME
 from langchain.embeddings import HuggingFaceBgeEmbeddings
-
-
-# Set HuggingFace embeddings model parameters
-EMBEDDINGS_MODEL_NAME = "BAAI/bge-base-en-v1.5"
-EMBEDDINGS_MODEL_KWARGS = {'device': 'cpu'}
-EMBEDDINGS_ENCODE_KWARGS = {'normalize_embeddings': False}
 
 
 def get_embeddings_model():

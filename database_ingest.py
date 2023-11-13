@@ -28,8 +28,8 @@ def main():
     # Persist vector database
     store.persist(
         database,
-        index_path=f"{VECTOR_DATABASE_NAME}.index",
-        vector_model_path="{VECTOR_DATABASE_NAME}.pkl"
+        index_path=VECTOR_DATABASE_NAME,
+        vector_model_path=VECTOR_DATABASE_NAME
     )
 
 

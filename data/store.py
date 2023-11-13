@@ -37,11 +37,12 @@ def store_on_faiss(texts: list, embeddings_model, metadatas: list):
     return store
 
 
-def persist(store, index_path: str, vector_model_path: str):
+def persist(store, index_path: str, vector_model_path: str, vector_model_extension=".pkl", index_extension=".index"):
+    vector_model_path = "".join([vector_model_path, vector_model_extension])
+    index_path = "".join([index_path, index_extension])
+    
     # Write index
     faiss.write_index(store.index, index_path)
-    
-    vector_model_path = "".join([vector_model_path, ".pkl"])
 
     try:
         with open(vector_model_path, "wb") as f:

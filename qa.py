@@ -18,7 +18,8 @@ vector_db = VectorDatabaseRetriever(
 
 chain = RetrievalQAWithSourcesChain.from_chain_type(
     llm=ChatOpenAI(model_name=LLM_MODEL_NAME, temperature=LLM_MODEL_TEMPERATURE),
-    retriever=vector_db.store.as_retriever())
+    retriever=vector_db.store.as_retriever()
+)
 
 result = chain({"question": args.question})
 

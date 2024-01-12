@@ -95,3 +95,7 @@ target/
 
 # Mypy cache
 .mypy_cache/
+
+# objects cache
+documents_cache/
+model_cache/

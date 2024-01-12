@@ -1,5 +1,5 @@
 from langchain.text_splitter import CharacterTextSplitter
-from data import DataObject
+# from data import DataObject
 
 
 def split_text(data, chunk_size: str = 1500, sep: str = "\n"):

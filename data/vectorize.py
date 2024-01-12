@@ -1,4 +1,4 @@
-from env_variables import EMBEDDINGS_ENCODE_KWARGS, EMBEDDINGS_MODEL_KWARGS, EMBEDDINGS_MODEL_NAME
+from data.env_variables import EMBEDDINGS_ENCODE_KWARGS, EMBEDDINGS_MODEL_KWARGS, EMBEDDINGS_MODEL_NAME
 from langchain.embeddings import HuggingFaceBgeEmbeddings
 
 

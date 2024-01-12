@@ -57,14 +57,14 @@ class VectorDatabaseRetriever:
         self.index = self.load_index(database_filepath, database_name)
     
     
-    def load_store(database_filepath, database_name):
+    def load_store(self, database_filepath, database_name):
         store_filepath = database_filepath / (database_name + ".pkl")
         store = pickle.load(store_filepath)
 
         return store
     
 
-    def load_index(database_filepath, database_name):
+    def load_index(self, database_filepath, database_name):
         index_filepath = database_filepath / (database_name + ".index")
         index = faiss.read_index(index_filepath)
 

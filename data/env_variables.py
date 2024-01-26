@@ -35,3 +35,6 @@ HUGGINGFACE_API_TOKEN = "<insert-your-hf-api-key-here>"
 
 # LLama endpoint parameters
 LLAMA2_API_TOKEN = "<insert-your-llama-api-key-here>"
+
+# NVIDIA NGC settings
+NVIDIANGC_API_KEY = "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"

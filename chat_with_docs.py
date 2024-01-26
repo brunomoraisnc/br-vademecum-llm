@@ -1,7 +1,7 @@
 # import environment variables
 from data.env_variables import AZURE_OPENAI_DEPLOYMENT_NAME, AZURE_OPENAI_MODEL_NAME, \
     AZURE_OPENAI_API_ENDPOINT, OPENAI_API_VERSION, AZURE_OPENAI_API_KEY, \
-    HUGGINGFACE_API_TOKEN, LLAMA2_API_TOKEN, OPENAI_API_KEY
+    HUGGINGFACE_API_TOKEN, LLAMA2_API_TOKEN, OPENAI_API_KEY, NVIDIANGC_API_KEY
 from dotenv import load_dotenv
 
 # import software general purpose libs
@@ -38,6 +38,7 @@ from langchain_community.llms.huggingface_endpoint import HuggingFaceEndpoint
 from langchain.llms.gpt4all import GPT4All
 from langchain.chat_models import AzureChatOpenAI
 from langchain.chat_models import ChatOpenAI
+from langchain_nvidia_ai_endpoints import ChatNVIDIA
 
 # import hugging face transformers lib - only for quantized models
 # import transformers
@@ -143,6 +144,17 @@ def get_llm_instance(model_interface: str):
                 "token": LLAMA2_API_TOKEN
             }
         )
+    elif model_interface == "nvidia-mixtral":
+        callbacks = [StreamingStdOutCallbackHandler()]
+        llm_instance = ChatNVIDIA(
+            model="mixtral_8x7b",
+            nvidia_api_key=NVIDIANGC_API_KEY,
+            callbacks=callbacks,
+            temperature=0.2,
+            top_p=0.7,
+            max_tokens=1024,
+            seed=42
+        )
     
     return llm_instance
 
@@ -154,7 +166,8 @@ def initialize_conversation_chain():
     
     retriever_instance = vectordb.as_retriever(search_kwargs={'k':4})
 
-    llm_instance = get_llm_instance("huggingface-endpoint-zephyr-7b")
+    # llm_instance = get_llm_instance("huggingface-endpoint-zephyr-7b")
+    llm_instance = get_llm_instance("nvidia-mixtral")
     # llm_instance = get_llm_instance("gpt4all")
 
     log.info("Inicializando")

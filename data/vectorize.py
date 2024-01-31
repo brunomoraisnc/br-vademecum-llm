@@ -1,5 +1,5 @@
 from data.env_variables import EMBEDDINGS_ENCODE_KWARGS, EMBEDDINGS_MODEL_KWARGS, EMBEDDINGS_MODEL_NAME
-from langchain.embeddings import HuggingFaceBgeEmbeddings, SentenceTransformerEmbeddings
+from langchain_community.embeddings.huggingface import HuggingFaceBgeEmbeddings, HuggingFaceEmbeddings
 
 
 def get_embeddings_model():
@@ -10,7 +10,7 @@ def get_embeddings_model():
             encode_kwargs=EMBEDDINGS_ENCODE_KWARGS
         )
     elif EMBEDDINGS_MODEL_NAME == "intfloat/multilingual-e5-large":
-        embedding_model = SentenceTransformerEmbeddings(
+        embedding_model = HuggingFaceEmbeddings(
             model_name=EMBEDDINGS_MODEL_NAME,
             model_kwargs = EMBEDDINGS_MODEL_KWARGS
         )

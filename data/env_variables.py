@@ -1,5 +1,7 @@
 from pathlib import Path
 
+# Multilanguage activation
+MULTILANGUAGE_MODE = True
 
 # Project root path
 PATH = Path(".")
@@ -16,7 +18,7 @@ LLM_MODEL_NAME = "gpt-3.5-turbo"
 LLM_MODEL_TEMPERATURE = 0
 
 # HuggingFace embeddings model parameters
-EMBEDDINGS_MODEL_NAME = "BAAI/bge-base-en-v1.5"
+EMBEDDINGS_MODEL_NAME = "intfloat/multilingual-e5-large" if MULTILANGUAGE_MODE else "BAAI/bge-base-en-v1.5"
 EMBEDDINGS_MODEL_KWARGS = {'device': 'cpu'}
 EMBEDDINGS_ENCODE_KWARGS = {'normalize_embeddings': False}
 

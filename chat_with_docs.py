@@ -21,7 +21,6 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 # import embedding processing objects
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import SentenceTransformerEmbeddings
 
 # import vector database
 from langchain.vectorstores.chroma import Chroma
@@ -40,6 +39,8 @@ from langchain.chat_models import AzureChatOpenAI
 from langchain.chat_models import ChatOpenAI
 from langchain_nvidia_ai_endpoints import ChatNVIDIA
 
+
+from data.vectorize import get_embeddings_model
 # import hugging face transformers lib - only for quantized models
 # import transformers
 # from transformers import BitsAndBytesConfig, AutoTokenizer, AutoModelForCausalLM, AutoConfig, pipeline
@@ -60,7 +61,7 @@ N_THREADS = psutil.cpu_count()
 
 def load_vector_database():
     log.info("Initializing Vector DB")
-    sentence_transformer_ef = SentenceTransformerEmbeddings(model_name="intfloat/multilingual-e5-large", model_kwargs = {'device': 'cpu'})
+    sentence_transformer_ef = get_embeddings_model()
     
     st.session_state.vectordb = Chroma(persist_directory="./documents_cache/qa_retrieval", embedding_function=sentence_transformer_ef)
 
@@ -207,7 +208,7 @@ def process_new_uploads(pdf_docs):
         with open(os.path.join("tmp_documents",doc.name),"wb") as f:
             f.write(doc.getbuffer())
         
-        loader = PyPDFLoader(file_path=f"./tmp_documents/{doc.name}")        
+        loader = PyPDFLoader(file_path=f"./tmp_documents/{doc.name}")
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=640, chunk_overlap=128)
         
         log.info("Particiona texto")

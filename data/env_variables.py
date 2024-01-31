@@ -3,6 +3,9 @@ from pathlib import Path
 # Multilanguage activation
 MULTILANGUAGE_MODE = True
 
+# GPU activation
+GPU_MODE = False
+
 # Project root path
 PATH = Path(".")
 
@@ -19,7 +22,7 @@ LLM_MODEL_TEMPERATURE = 0
 
 # HuggingFace embeddings model parameters
 EMBEDDINGS_MODEL_NAME = "intfloat/multilingual-e5-large" if MULTILANGUAGE_MODE else "BAAI/bge-base-en-v1.5"
-EMBEDDINGS_MODEL_KWARGS = {'device': 'cpu'}
+EMBEDDINGS_MODEL_KWARGS = {'device': 'gpu' if GPU_MODE else 'cpu'}
 EMBEDDINGS_ENCODE_KWARGS = {'normalize_embeddings': False}
 
 # OpenAI settings
@@ -39,4 +42,7 @@ HUGGINGFACE_API_TOKEN = "<insert-your-hf-api-key-here>"
 LLAMA2_API_TOKEN = "<insert-your-llama-api-key-here>"
 
 # NVIDIA NGC settings
-NVIDIANGC_API_KEY = "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"
+NVIDIANGC_API_KEY = "<insert-your-NVIDIAKEY-here>"
+
+
+### TODO - OFFLINE LLM MODEL GPU SETTINGS

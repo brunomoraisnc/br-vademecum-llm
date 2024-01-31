@@ -191,9 +191,10 @@ def handle_user_input(user_question, response_container):
     with response_container.container():
         with st.spinner("Gerando resposta..."):
             log.info(f"Gerando resposta para consulta do cliente: {user_question}")
+            user_question += " (responda resumidamente em pt-br)"
             response = qa_chain({"question":user_question}, return_only_outputs=True)
-        
-            # st.write(response)                
+            
+            # st.write(response)
             st.write(response["answer"])
             
             with st.expander(label="Sources", expanded=False):

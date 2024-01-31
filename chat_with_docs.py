@@ -13,7 +13,8 @@ import logging as log
 from langchain.globals import set_debug
 
 # import langchain document loader
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import Docx2txtLoader
 
 # import message handlers
 from streamlit_chat import message
@@ -200,15 +201,22 @@ def handle_user_input(user_question, response_container):
                     st.write(source)
 
 
-def process_new_uploads(pdf_docs):
+def process_new_uploads(uploaded_files):
     vectordb:Chroma = st.session_state.vectordb
-    for doc in pdf_docs:
+    for doc in uploaded_files:
         log.info(f"Processa arquivo: {doc.name}")
         
-        with open(os.path.join("tmp_documents",doc.name),"wb") as f:
+        with open(os.path.join("tmp_documents", doc.name), "wb") as f:
             f.write(doc.getbuffer())
         
-        loader = PyPDFLoader(file_path=f"./tmp_documents/{doc.name}")
+        extension = doc.name.split(".")[-1]
+        filepath = f"./tmp_documents/{doc.name}"
+
+        if extension == "pdf":
+            loader = PyPDFLoader(file_path=filepath)
+        elif extension == "docx" or extension == "doc":
+            loader = Docx2txtLoader(file_path=filepath)
+        
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=640, chunk_overlap=128)
         
         log.info("Particiona texto")
@@ -247,13 +255,13 @@ def main():
 
     with st.sidebar:
         st.subheader("Seus documentos")
-        pdf_docs = st.file_uploader(
-            "Insira seus PDFs aqui e clique em 'Processar'",
+        uploaded_files = st.file_uploader(
+            "Insira seu arquivo aqui (.pdf, .docx) e clique em 'Processar'",
             accept_multiple_files=True
         )
         if st.button("Processar"):
             with st.spinner("Processando..."):
-                process_new_uploads(pdf_docs)
+                process_new_uploads(uploaded_files)
 
 
 if __name__ == "__main__":
